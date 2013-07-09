@@ -1,0 +1,10 @@
+<project name="EduChat" default="compile" basedir=".">
+	<property name="tools" location="tools"/>
+	<property name="less" location="less"/>
+	<target name="compile">
+		<!-- compile App.less > App.css -->
+		<java jar="${tools}/rhino.jar" fork="true" failonerror="true">
+			<arg line="-opt -1 ${tools}/less-rhino-1.3.3.js ${less}/App.less App.css"/>
+		</java>
+	</target>
+</project>
