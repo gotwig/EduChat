@@ -2,47 +2,53 @@ from tornado import websocket, web, ioloop
 import tornado
 import json
 
-cl = []
+connections = []
 
 class IndexHandler(tornado.web.RequestHandler):
-
     def get(self):
         self.render("index.html")
+        
+class EchoWebSocket(websocket.WebSocketHandler):
+        
+        username = None
+    
+        def open(self):
+            self.username = self.get_argument("username", "generic")
+            global connections
+            connections.append(self)
+            
+            for conn in connections:
+                if conn != self:
+                    conn.write_message(json.dumps(dict(event='joined', user=self.username)))
 
-class SocketHandler(tornado.websocket.WebSocketHandler):
+        def on_message(self, message):
+            global connections
+            
+            for conn in connections:
+                conn.write_message(json.dumps(dict(event='message', user=self.username, message=message)))
 
-    def open(self):
-        if self not in cl:
-            cl.append(self)
-
-    def on_close(self):
-        if self in cl:
-            cl.remove(self)
-
-class ApiHandler(tornado.web.RequestHandler):
-
-    @tornado.web.asynchronous
-    def get(self, *args):
-        self.finish()
-        id = self.get_argument("id")
-        value = self.get_argument("value")
-        data = {"id": id, "value" : value}
-        data = json.dumps(data)
-        for c in cl:
-            c.write_message(data)
-
-    @tornado.web.asynchronous
-    def post(self):
-        pass
+        def on_close(self):
+            global connections
+            
+            for conn in connections:
+                if conn != self:
+                    conn.write_message(json.dumps(dict(event='left', user=self.username)))
+            
+            connections.remove(self)
+            
 
 app = tornado.web.Application([
     (r'/', IndexHandler),
-    (r'/ws', SocketHandler),
-    (r'/api', ApiHandler),
-    (r'/(favicon.ico)', tornado.web.StaticFileHandler, {'path': '../'}),
-    (r'/(rest_api_example.png)', tornado.web.StaticFileHandler, {'path': './'}),
-])
+    (r'/ws', EchoWebSocket),
+    (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': 'js'}),
+    (r'/(App.css)', tornado.web.StaticFileHandler, {'path': '.'})
+], debug=True)
+
+
+
 
 if __name__ == '__main__':
-    app.listen(8888)
+    app.listen(8080)
     tornado.ioloop.IOLoop.instance().start()
+    
+    
