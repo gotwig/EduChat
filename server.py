@@ -34,6 +34,7 @@ class EchoWebSocket(websocket.WebSocketHandler):
                 conn.write_message(json.dumps(dict(event='message', user=self.username, usernamenumber=self.usernamenumber, message=message)))
 
         def on_close(self):
+            
             global connections
             global usernamenumber
             

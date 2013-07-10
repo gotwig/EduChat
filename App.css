@@ -4678,19 +4678,47 @@ body > .container {
 }
 body > .container #entry {
   margin: 12px;
+  margin-left: 24%;
 }
 body > .container #entry.active {
   width: 86%;
+  margin-left: 5%;
 }
 body > .container .message {
   overflow-wrap: break-word;
   margin: 2%;
   list-style: none;
   margin-left: 5%;
+  background-color: gainsboro;
+  border: 1px transparent;
+  border-radius: 12px;
+}
+body > .container .messagetext {
+  margin-left: 1%;
+}
+body > .container .removemessage {
+  height: 25px;
+  position: relative;
+  right: 38%;
+  visibility: hidden;
+}
+body > .container .removemessage_icon {
+  width: 20px;
+}
+body > .container .removemessage_icon:hover {
+  cursor: pointer;
+}
+body > .container .message:hover .removemessage {
+  visibility: visible;
 }
 body > .container .username {
+  text-align: center;
+  margin-top: 0px;
   margin-bottom: 0.6%;
   background-color: #cfcfcf;
+  border: 2px transparent;
+  border-radius: 12px 12px 0px 0px;
+  font-weight: bold;
 }
 body > .container .usernamen1 {
   color: blue;
