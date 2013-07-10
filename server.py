@@ -1,6 +1,7 @@
 from tornado import websocket, web, ioloop
 import tornado
 import json
+import datetime
 
 connections = []
 
@@ -17,6 +18,7 @@ class EchoWebSocket(websocket.WebSocketHandler):
         def open(self):
             global usernamenumber
             self.username = self.get_argument("username", "generic")
+            self.channelname = self.get_argument("channelname", "generic")
             self.usernamenumber = usernamenumber +1
             usernamenumber+=1
             global connections
@@ -31,9 +33,11 @@ class EchoWebSocket(websocket.WebSocketHandler):
             global usernamenumber
             
             for conn in connections:
-                conn.write_message(json.dumps(dict(event='message', user=self.username, usernamenumber=self.usernamenumber, message=message)))
+                conn.write_message(json.dumps(dict(event='message', user=self.username, usernamenumber=self.usernamenumber, message=message, time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
 
         def on_close(self):
+            
+            
             
             global connections
             global usernamenumber
@@ -46,6 +50,7 @@ class EchoWebSocket(websocket.WebSocketHandler):
             usernamenumber=self.usernamenumber-1
 
 app = tornado.web.Application([
+
     (r'/', IndexHandler),
     (r'/ws', EchoWebSocket),
     (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': 'js'}),
