@@ -11,9 +11,14 @@ class IndexHandler(tornado.web.RequestHandler):
 class EchoWebSocket(websocket.WebSocketHandler):
         
         username = None
+        global usernamenumber
+        usernamenumber = 0
     
         def open(self):
+            global usernamenumber
             self.username = self.get_argument("username", "generic")
+            self.usernamenumber = usernamenumber +1
+            usernamenumber+=1
             global connections
             connections.append(self)
             
@@ -23,19 +28,21 @@ class EchoWebSocket(websocket.WebSocketHandler):
 
         def on_message(self, message):
             global connections
+            global usernamenumber
             
             for conn in connections:
-                conn.write_message(json.dumps(dict(event='message', user=self.username, message=message)))
+                conn.write_message(json.dumps(dict(event='message', user=self.username, usernamenumber=self.usernamenumber, message=message)))
 
         def on_close(self):
             global connections
+            global usernamenumber
             
             for conn in connections:
                 if conn != self:
                     conn.write_message(json.dumps(dict(event='left', user=self.username)))
             
             connections.remove(self)
-            
+            usernamenumber=self.usernamenumber-1
 
 app = tornado.web.Application([
     (r'/', IndexHandler),

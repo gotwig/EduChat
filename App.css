@@ -4683,9 +4683,29 @@ body > .container #entry.active {
   width: 86%;
 }
 body > .container .message {
+  overflow-wrap: break-word;
   margin: 2%;
   list-style: none;
   margin-left: 5%;
+}
+body > .container .username {
+  margin-bottom: 0.6%;
+  background-color: #cfcfcf;
+}
+body > .container .usernamen1 {
+  color: blue;
+}
+body > .container .usernamen2 {
+  color: red;
+}
+body > .container .usernamen3 {
+  color: green;
+}
+body > .container .usernamen4 {
+  color: yellow;
+}
+body > .container .usernamen5 {
+  color: pink;
 }
 body > .container .removethestuff.hidden {
   visibility: hidden;
