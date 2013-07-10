@@ -4679,9 +4679,11 @@ body > .container {
 body > .container #entry {
   margin: 12px;
   margin-left: 24%;
+  position: fixed;
+  bottom: 2%;
 }
 body > .container #entry.active {
-  width: 86%;
+  width: 76%;
   margin-left: 5%;
 }
 body > .container .message {
@@ -4700,7 +4702,11 @@ body > .container .removemessage {
   height: 25px;
   position: relative;
   right: 38%;
-  visibility: hidden;
+}
+@media only screen and (min-width: 1224px) {
+  body > .container .removemessage {
+    visibility: hidden;
+  }
 }
 body > .container .removemessage_icon {
   width: 20px;
