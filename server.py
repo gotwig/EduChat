@@ -3,58 +3,52 @@ import tornado
 import json
 import datetime
 
-connections = []
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("index.html")
-        
+ 
 class EchoWebSocket(websocket.WebSocketHandler):
-        
         username = None
-        global usernamenumber
         usernamenumber = 0
     
         def open(self):
-            global usernamenumber
-            self.username = self.get_argument("username", "generic")
-            self.channelname = self.get_argument("channelname", "generic")
-            self.usernamenumber = usernamenumber +1
-            usernamenumber+=1
-            global connections
-            connections.append(self)
             
-            for conn in connections:
+            self.username = self.get_argument("username", "generic")
+            self.channelname = self.get_argument("chatroomname", "generic")
+            
+            self.usernamenumber = EchoWebSocket.usernamenumber + 1
+            EchoWebSocket.usernamenumber += 1
+            
+            print('{0} joined the channel {1} at {2}'.format(self.username, self.channelname, datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")))
+            
+            EchoWebSocket.connections.append(self)
+            for conn in EchoWebSocket.connections:
                 if conn != self:
                     conn.write_message(json.dumps(dict(event='joined', user=self.username)))
 
         def on_message(self, message):
-            global connections
-            global usernamenumber
-            
-            for conn in connections:
+            for conn in EchoWebSocket.connections:
                 conn.write_message(json.dumps(dict(event='message', user=self.username, usernamenumber=self.usernamenumber, message=message, time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
 
         def on_close(self):
-            
-            
-            
-            global connections
-            global usernamenumber
-            
-            for conn in connections:
+            for conn in EchoWebSocket.connections:
                 if conn != self:
                     conn.write_message(json.dumps(dict(event='left', user=self.username)))
             
-            connections.remove(self)
-            usernamenumber=self.usernamenumber-1
+            EchoWebSocket.connections.remove(self)
+            EchoWebSocket.usernamenumber = self.usernamenumber-1
+
+EchoWebSocket.usernamenumber = 0
+EchoWebSocket.connections = []
 
 app = tornado.web.Application([
 
     (r'/', IndexHandler),
     (r'/ws', EchoWebSocket),
     (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': 'js'}),
-    (r'/(App.css)', tornado.web.StaticFileHandler, {'path': '.'})
+    (r'/(App.css)', tornado.web.StaticFileHandler, {'path': '.'}),
+    (r'/(favicon.ico)', tornado.web.StaticFileHandler, {'path': '.'})
 ], debug=True)
 
 
