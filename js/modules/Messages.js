@@ -1,56 +1,73 @@
-define(function() {
+define(['jquery'], function($) {
 			return {
-
-				messages : undefined,
-
-				start : function() {
-
-				},
-
+				contentEl: undefined,
+				options: undefined,
 				
+				start : function(options) {
+					this.options = options;
+					
+					this.createUI();
+					this.registerCallbacks();
+				},
 
 				stop : function() {
 
 				},
 
-				writeToScreen: function(username, op, usernamenumber, message, time) {
-			    	
-					if(op){
-			    		$('<li class="message"> <p class="username usernamen'+usernamenumber+'">' + removebutton + ' <span class="usernameposition">' + username + '</span> <span class="entrydate"> <date>'+time+'</date></span> </p><span class="messagetext">'+message+'</span></li>').hide().appendTo(messagearea).fadeIn(300);
-					}
+				createUI: function() {
+					this.contentEl = $('<ul id="messages"></ul>');
 					
-			    	if  (username=="system" ){
-			        	messagearea.append('<li style="color:gray;color: gray;font-size: 80%;margin-left: 2%;">'+message+' at '+ time + '</li>');
-			    	}
-			    	
-			    	else {
-			    		$('<li class="message"> <p class="username usernamen'+usernamenumber+'">' + removebutton + ' <span class="usernameposition">' + username + '</span> <span class="entrydate"> <date>'+time+'</date></span> </p><span class="messagetext">'+message+'</span></li>').hide().appendTo(messagearea).fadeIn(400);
-			    	}
-			    	
-			    },
+					this.options.containerEl.append(this.contentEl);
+				},
 				
-			    removeEntry: function(){
-					$(this).parent().parent().remove();	
-			    },
-			    	
-			    	
-				addListener : function(event, callback) {
-					switch (event) {
-					case 'system':
-						writeToScreen("system", false, 0, "This is an important system message. Please take notice.", "12:30");
-						break;
-
-					case 'user':
-						writeToScreen(obj.username, false, obj.usernamenumber, message, "12:30");
-						break;
-
-					case 'operator':
-						writeToScreen(obj.username, true, obj.usernamenumber, message, "12:30");
-						break;
-
-					default:
-						break;
-					}
+				registerCallbacks: function() {
+					var $this = this;
+										
+					this.options.socket.addListener('onmessage', function(data) {
+						var obj = JSON.parse(data);
+						console.log(this);
+						$this.appendMessage(obj.message, false);
+					});
+					
+					
+				},
+				
+				appendMessage: function(message, isSystemMessage) {
+					var alertName, systemMessage;
+					
+					var messageType = isSystemMessage ? 'systemmessage' : 'usermessage';
+					
+					/*if (isSystemMessage){
+						
+						switch (message){
+						
+						case 'open':
+							alertName = 'alert-success';
+							systemMessage = 'You successfully joined the chat.';
+							break;
+						
+						case 'closed':
+							alertName = 'alert-error';
+							systemMessage = 'The server is not reachable. Try to rejoin later.'
+							break;
+						
+						default:
+							alertName = 'alert-info'
+							systemMessage = 'Something unexpected happened. Try to rejoin.'
+							
+						}
+						
+					}*/
+					
+					$(['<li class="message">',
+	    		   		'<p class="', messageType ,'">',
+	    		   			'<button class="close removemessage">',
+	    		   				'&times;',
+	    					'</button>',
+	    		   			'<div class="messagetext">',
+	    						message,
+							'</div>',
+	    		   '</li>'].join()).hide().appendTo(messages).fadeIn(300);
 				}
-			};
+			}
 		})

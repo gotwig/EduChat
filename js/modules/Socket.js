@@ -16,10 +16,12 @@ define(function() {
 					this.socket = new WebSocket([ 'ws://', domain, ':', port,
 							'/ws?username=', username, '&chatroomname=',
 							chatroomname ].join(''));
-					this.socket.onmessage = function(data) {
+					
+					this.socket.onmessage = function(dataevent) {
 						for ( var i = 0, len = $this.onMessageListeners.length; i < len; i++) {
-							$this.onMessageListeners[i](data);
+							$this.onMessageListeners[i](dataevent.data);
 						}
+
 					};
 					this.socket.onopen = function(data) {
 						for ( var i = 0, len = $this.onOpenListeners.length; i < len; i++) {
@@ -35,37 +37,36 @@ define(function() {
 
 				},
 
+				
 				stop : function() {
 
 				},
 
 				send : function(message) {
-					var $this = this;
-
-					if (typeof this.socket === 'object') {
+					if (this.socket instanceof WebSocket) {
 						this.socket.send(message);
 					}
 
 					else {
-						console.log("Can't send message: " + message);
+						throw new Error("Can't send message,  Socket is not an WebSocket object.");
 					}
 
 				},
 
 				addListener : function(event, callback) {
 					switch (event) {
-					case 'message':
+					case 'onmessage':
 						this.onMessageListeners.push(callback);
 						break;
 
-					case 'open':
+					case 'onopen':
 						this.onOpenListeners.push(callback);
 						break;
 
-					case 'close':
+					case 'onclose':
 						this.onCloseListeners.push(callback);
 						break;
-
+						
 					default:
 						break;
 					}
