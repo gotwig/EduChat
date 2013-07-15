@@ -5,57 +5,54 @@ requirejs.config({
     }
 });
 
-requirejs(['jquery', 'libs/scaleApp', 'modules/Socket', 'js/modules/Messages.js'], function   ($, scaleApp, SocketModule, MessageModule) {
+requirejs(['jquery', 'libs/scaleApp', 'modules/Socket', 'js/modules/Messages.js', 'js/modules/Login.js'], function   ($, scaleApp, SocketModule, MessageModule, LoginModule) {
     $(document).ready(function() {
     
     	var core = new scaleApp.Core();
     	
     	var messagearea = $('#messages'),
     		websocket,
-    		entry = $("#entry"),
     		username = "John Doe";
     		channelname = "idontevencare";
     	
     
+    		LoginModule.start({
+				containerEl: $("#containerEl")
+			});
     
-    		$("#enter").click(function () {
-    			if ($("#username").val().length > 0 && $("#username").val().length < 16){
-    				username = $("#username").val();
-    			}
-			
-    			if ($("#channelname").val().length > 0 && $("#channelname").val().length < 12){
-    				channelname = $("#channelname").val();
-    			}
-			
-    			SocketModule.connect("10.11.12.139", "8080", username, channelname);
-				SocketModule.addListener("onopen", function(){
+    		LoginModule.addListener("login", function(userName, channelName){
+    			SocketModule.connect("10.11.12.139", "8080", userName, channelName);
+    			
+        		$("#entry").focus(function (event) {
+        			$(this).addClass("active");
+        		}).blur(function (event) {
+        			$(this).removeClass("active");
+        		});
+    	
+    	
+        		$('#entry').bind('keypress', function(e) {
+        			if(e.keyCode==13 && $('#entry').val().length > 0){
+    			
+        				SocketModule.send($('#entry').val());
+        				$('#entry').val("");
+        			}
+        		});
+    			
+    		})
+    			
+    			
+    		SocketModule.addListener("onopen", function(){
 					MessageModule.start({
 						containerEl: $("#messages"),
 						socket: SocketModule
 						
 					});
-				});
-			
-			
-    			entry.removeClass('hidden');
-    			$(".removethestuff").addClass("hidden")
-    			entry.focus();
-    		});
+			});
+    			
+    		
+    		
 	
-    		entry.focus(function (event) {
-    			$(this).addClass("active");
-    		}).blur(function (event) {
-    			$(this).removeClass("active");
-    		});
-	
-	
-    		$('#entry').bind('keypress', function(e) {
-    			if(e.keyCode==13 && entry.val().length > 0 && entry.val().length < 200){
-			
-    				SocketModule.send(entry.val());
-    				entry.val("");
-    			}
-    		});
+
     });
 });
 

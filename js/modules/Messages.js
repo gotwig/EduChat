@@ -28,6 +28,7 @@ define(['jquery'], function($) {
 						console.log(this);
 						$this.appendMessage(obj.message, false);
 					});
+				
 					
 					
 				},
@@ -37,7 +38,7 @@ define(['jquery'], function($) {
 					
 					var messageType = isSystemMessage ? 'systemmessage' : 'usermessage';
 					
-					/*if (isSystemMessage){
+					if (isSystemMessage){
 						
 						switch (message){
 						
@@ -54,10 +55,21 @@ define(['jquery'], function($) {
 						default:
 							alertName = 'alert-info'
 							systemMessage = 'Something unexpected happened. Try to rejoin.'
-							
 						}
 						
-					}*/
+						$(['<li class="message">',
+		    		   		'<p class="', messageType ,'">',
+		    		   			'<button class="close removemessage">',
+		    		   				'&times;',
+		    					'</button>',
+		    		   			'<div class="messagetext">',
+		    						message,
+								'</div>',
+		    		   '</li>'].join()).hide().appendTo(messages).fadeIn(300);
+						
+					}
+					
+					if (!isSystemMessage){
 					
 					$(['<li class="message">',
 	    		   		'<p class="', messageType ,'">',
@@ -68,6 +80,7 @@ define(['jquery'], function($) {
 	    						message,
 							'</div>',
 	    		   '</li>'].join()).hide().appendTo(messages).fadeIn(300);
+					}
 				}
 			}
 		})
