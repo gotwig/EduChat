@@ -12,9 +12,9 @@ define(['jquery'], function($) {
 		    				'<br />',
 		    				'<button id="enter" type="submit" class="btn">Enter a world of joy</button>',
 		    			'</fieldset>',
-		    			'<div id="messages">',
+		    			'<div id="messagesarea">',
 		    			'</div>',
-		    			'<input id="entry" type="text" class="hidden" size="200" "Your new message comes here =)">',
+		    			'<input id="entry" type="text" class="hidden" maxlength="180" placeholder="Your new message comes here =)">',
 		    			'</div>',
 		    			
 		    			].join('');

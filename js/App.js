@@ -5,8 +5,10 @@ requirejs.config({
     }
 });
 
-requirejs(['jquery', 'libs/scaleApp', 'modules/Socket', 'js/modules/Messages.js', 'js/modules/Login.js'], function   ($, scaleApp, SocketModule, MessageModule, LoginModule) {
-    $(document).ready(function() {
+requirejs(['jquery', 'libs/scaleApp', 'modules/Socket', 'js/modules/Messages.js', 'js/modules/Login.js', 'js/modules/Userlist.js'],
+		 function   ($, scaleApp, SocketModule, MessageModule, LoginModule, UserList) {
+    
+	$(document).ready(function() {
     
     	var core = new scaleApp.Core();
     	
@@ -43,7 +45,7 @@ requirejs(['jquery', 'libs/scaleApp', 'modules/Socket', 'js/modules/Messages.js'
     			
     		SocketModule.addListener("onopen", function(){
 					MessageModule.start({
-						containerEl: $("#messages"),
+						containerEl: $("#messagesarea"),
 						socket: SocketModule
 						
 					});

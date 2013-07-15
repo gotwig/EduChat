@@ -8,6 +8,7 @@ define(['jquery'], function($) {
 					
 					this.createUI();
 					this.registerCallbacks();
+					
 				},
 
 				stop : function() {
@@ -18,6 +19,12 @@ define(['jquery'], function($) {
 					this.contentEl = $('<ul id="messages"></ul>');
 					
 					this.options.containerEl.append(this.contentEl);
+					
+					this.contentEl.find(".close").click(function () {
+		    			console.log("bluber");
+		    		});
+					
+					
 				},
 				
 				registerCallbacks: function() {
@@ -25,15 +32,22 @@ define(['jquery'], function($) {
 										
 					this.options.socket.addListener('onmessage', function(data) {
 						var obj = JSON.parse(data);
-						console.log(this);
-						$this.appendMessage(obj.message, false);
+						$this.appendMessage(obj.user, obj.message, false);
 					});
 				
+					this.options.socket.addListener('onopen', function(data) {
+						var obj = JSON.parse(data);
+						$this.appendMessage("", "open", true);
+					});
 					
+					this.options.socket.addListener('onclose', function(data) {
+						var obj = JSON.parse(data);
+						$this.appendMessage("", "closed", true);
+					});
 					
 				},
 				
-				appendMessage: function(message, isSystemMessage) {
+				appendMessage: function(user, message, isSystemMessage) {
 					var alertName, systemMessage;
 					
 					var messageType = isSystemMessage ? 'systemmessage' : 'usermessage';
@@ -65,13 +79,13 @@ define(['jquery'], function($) {
 		    		   			'<div class="messagetext">',
 		    						message,
 								'</div>',
-		    		   '</li>'].join()).hide().appendTo(messages).fadeIn(300);
+		    		   '</li>'].join('')).hide().appendTo(messages).fadeIn(300);
 						
 					}
 					
 					if (!isSystemMessage){
 					
-					$(['<li class="message">',
+					$(['<li class="message well">',
 	    		   		'<p class="', messageType ,'">',
 	    		   			'<button class="close removemessage">',
 	    		   				'&times;',
@@ -79,7 +93,7 @@ define(['jquery'], function($) {
 	    		   			'<div class="messagetext">',
 	    						message,
 							'</div>',
-	    		   '</li>'].join()).hide().appendTo(messages).fadeIn(300);
+	    		   '</li>'].join('')).hide().appendTo(messages).fadeIn(300);
 					}
 				}
 			}
