@@ -9,6 +9,10 @@ define(['jquery'], function($) {
 					this.createUI();
 					this.registerCallbacks();
 					
+					this.contentEl.find(".close").click(function () {
+		    			console.log("bluber");
+		    		});
+					
 				},
 
 				stop : function() {
@@ -18,12 +22,7 @@ define(['jquery'], function($) {
 				createUI: function() {
 					this.contentEl = $('<ul id="messages"></ul>');
 					
-					this.options.containerEl.append(this.contentEl);
-					
-					this.contentEl.find(".close").click(function () {
-		    			console.log("bluber");
-		    		});
-					
+					this.options.containerEl.append(this.contentEl);					
 					
 				},
 				
@@ -32,7 +31,7 @@ define(['jquery'], function($) {
 										
 					this.options.socket.addListener('onmessage', function(data) {
 						var obj = JSON.parse(data);
-						$this.appendMessage(obj.user, obj.message, false);
+						$this.appendMessage(obj.user, obj.usercolor, obj.message, false);
 					});
 				
 					this.options.socket.addListener('onopen', function(data) {
@@ -47,7 +46,7 @@ define(['jquery'], function($) {
 					
 				},
 				
-				appendMessage: function(user, message, isSystemMessage) {
+				appendMessage: function(user, usercolor, message, isSystemMessage) {
 					var alertName, systemMessage;
 					
 					var messageType = isSystemMessage ? 'systemmessage' : 'usermessage';
@@ -86,10 +85,11 @@ define(['jquery'], function($) {
 					if (!isSystemMessage){
 					
 					$(['<li class="message well">',
-	    		   		'<p class="', messageType ,'">',
+	    		   		'<p class="', messageType ,' ', usercolor ,' ">',
 	    		   			'<button class="close removemessage">',
 	    		   				'&times;',
 	    					'</button>',
+	    					user,
 	    		   			'<div class="messagetext">',
 	    						message,
 							'</div>',

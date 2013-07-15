@@ -10,15 +10,15 @@ class IndexHandler(tornado.web.RequestHandler):
  
 class EchoWebSocket(websocket.WebSocketHandler):
         username = None
-        usernamenumber = 0
+        usercolor = 0
     
         def open(self):
             
             self.username = self.get_argument("username", "generic")
             self.channelname = self.get_argument("chatroomname", "generic")
             
-            self.usernamenumber = EchoWebSocket.usernamenumber + 1
-            EchoWebSocket.usernamenumber += 1
+            self.usercolor = EchoWebSocket.usercolor + 1
+            EchoWebSocket.usercolor += 1
             
             print('{0} joined the channel {1} at {2}'.format(self.username, self.channelname, datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")))
             
@@ -29,7 +29,7 @@ class EchoWebSocket(websocket.WebSocketHandler):
 
         def on_message(self, message):
             for conn in EchoWebSocket.connections:
-                conn.write_message(json.dumps(dict(event='message', user=self.username, usernamenumber=self.usernamenumber, message=message, time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
+                conn.write_message(json.dumps(dict(event='message', user=self.username, usercolor=self.usercolor, message=message, time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
 
         def on_close(self):
             for conn in EchoWebSocket.connections:
@@ -37,9 +37,9 @@ class EchoWebSocket(websocket.WebSocketHandler):
                     conn.write_message(json.dumps(dict(event='left', user=self.username)))
             
             EchoWebSocket.connections.remove(self)
-            EchoWebSocket.usernamenumber = self.usernamenumber-1
+            EchoWebSocket.usercolor = self.usercolor-1
 
-EchoWebSocket.usernamenumber = 0
+EchoWebSocket.usercolor = 0
 EchoWebSocket.connections = []
 
 app = tornado.web.Application([
