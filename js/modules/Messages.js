@@ -1,4 +1,13 @@
 define(['jquery'], function($) {
+			var template = ['<ul class="module-messages">',
+			                '	<div id="messagesarea">',
+					           '</div>',
+					           '<input id="entry" type="text" maxlength="180" placeholder="Your new message comes here =)">',
+					           '<div id="whitespace">',
+				    		   '</div>',
+					        '</ul>'].join('');
+	
+	
 			return {
 				contentEl: undefined,
 				options: undefined,
@@ -9,9 +18,6 @@ define(['jquery'], function($) {
 					this.createUI();
 					this.registerCallbacks();
 					
-					this.contentEl.find(".close").click(function () {
-		    			console.log("bluber");
-		    		});
 					
 				},
 
@@ -20,10 +26,26 @@ define(['jquery'], function($) {
 				},
 
 				createUI: function() {
-					this.contentEl = $('<ul id="messages"></ul>');
+					$this = this;
+					
+					this.contentEl = template;
 					
 					this.options.containerEl.append(this.contentEl);					
 					
+	        		$("#entry").focus(function (event) {
+	        			$(this).addClass("active");
+	        		}).blur(function (event) {
+	        			$(this).removeClass("active");
+	        		});
+	    	
+	    	
+	        		$('#entry').bind('keypress', function(e) {
+	        			if(e.keyCode==13 && $('#entry').val().length > 0){
+	    			
+	        				$this.options.socket.send($('#entry').val());
+	        				$('#entry').val("");
+	        			}
+	        		});
 				},
 				
 				registerCallbacks: function() {
@@ -78,7 +100,7 @@ define(['jquery'], function($) {
 		    		   			'<div class="messagetext">',
 		    						message,
 								'</div>',
-		    		   '</li>'].join('')).hide().appendTo(messages).fadeIn(300);
+		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
 						
 					}
 					
@@ -93,7 +115,7 @@ define(['jquery'], function($) {
 	    		   			'<div class="messagetext">',
 	    						message,
 							'</div>',
-	    		   '</li>'].join('')).hide().appendTo(messages).fadeIn(300);
+	    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
 				   $("html, body").animate({ scrollTop: $(document).height() }, 1000);
 
 					}

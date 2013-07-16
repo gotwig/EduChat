@@ -1,8 +1,4 @@
 define(function() {
-		var template = ['<div id="userlist">',
-		                
-		                '</div>'].join('');
-	
 			return {
 
 				onMessageListeners : [],
@@ -10,31 +6,32 @@ define(function() {
 				onCloseListeners : [],
 				socket : undefined,
 
-				start : function() {
-
+				start : function(options) {
+					this.options = options;
+					
+					this.createUI();
+					this.registerCallbacks();
 				},
 				
 				stop : function() {
 
 				},
+				
+				createUI: function(){
+					this.contentEl = $('<ul id="module-userlist"></ul>');
+					
+					this.options.containerEl.append(this.contentEl);		
+				},
 
-				addListener : function(event, callback) {
-					switch (event) {
-					case 'onmessage':
-						this.onMessageListeners.push(callback);
-						break;
-
-					case 'onopen':
-						this.onOpenListeners.push(callback);
-						break;
-
-					case 'onclose':
-						this.onCloseListeners.push(callback);
-						break;
-						
-					default:
-						break;
-					}
-				}
+				registerCallbacks: function() {
+					$this = this;
+					
+					this.options.socket.addListener('onmessage', function(data) {
+						console.log("someone joined the chat");
+					});
+					
+				},
+				
+				
 			};
 		})

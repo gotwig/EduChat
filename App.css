@@ -4702,6 +4702,9 @@ input[type="submit"].btn.btn-mini {
     overflow: visible !important;
   }
 }
+.hidden {
+  visibility: hidden;
+}
 #containerEl {
   max-width: 960px;
   margin-top: 46px;
@@ -4713,13 +4716,19 @@ input[type="submit"].btn.btn-mini {
   bottom: 2%;
 }
 #containerEl #entry.active {
-  width: 76%;
+  width: 60%;
   margin-left: 5%;
+}
+#containerEl #userlist {
+  float: right;
 }
 #containerEl date {
   color: white;
   font-size: 85%;
   left: 10%;
+}
+#containerEl #whitespace {
+  height: 64px;
 }
 #containerEl .message {
   overflow-wrap: break-word;

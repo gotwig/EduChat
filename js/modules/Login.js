@@ -1,23 +1,18 @@
 define(['jquery'], function($) {
 		var template = ['<div class="module-login">',
-		    				'<h1 class="removethestuff">Join the Chat.</h1>',
-		    				'<p class="removethestuff">Enter your channel info.</p>',
+		    				'<h1>Join the Chat.</h1>',
+		    				'<p>Enter your channel info.</p>',
 
-		    			'<fieldset class="removethestuff">',
-		    				'<legend>ENTER NOW</legend>',
-		    				'<label>Your awesome Nickname</label>',
+		    				'<fieldset>',
+		    					'<legend>ENTER NOW</legend>',
+		    					'<label>Your awesome Nickname</label>',
 		    					'<input maxlength="16" id="username" type="text" placeholder="John Doe">',
-		    				'<label>Choose a legendary channelname</label>',
+		    					'<label>Choose a legendary channelname</label>',
 		    					'<input maxlength="10" id="channelname" type="text" placeholder="idontevencare">', 
-		    				'<br />',
-		    				'<button id="enter" type="submit" class="btn">Enter a world of joy</button>',
-		    			'</fieldset>',
-		    			'<div id="messagesarea">',
-		    			'</div>',
-		    			'<input id="entry" type="text" class="hidden" maxlength="180" placeholder="Your new message comes here =)">',
-		    			'</div>',
-		    			
-		    			].join('');
+		    					'<br />',
+		    					'<button type="submit" class="btn">Enter a world of joy</button>',
+		    				'</fieldset>',
+		    		    '</div>'].join('');
 			return {
 				contentEl: undefined,
 				onLoginListeners : [],
@@ -38,10 +33,8 @@ define(['jquery'], function($) {
 					this.contentEl = $(template);
 					this.options.containerEl.append(this.contentEl);
 					
-	    			this.contentEl.find("#entry").focus();
-	    			this.contentEl.find("#enter").click(function () {
-		    			$this.contentEl.find(".removethestuff").addClass("hidden");
-						$this.contentEl.find("#entry").removeClass('hidden');
+	    			this.contentEl.find(".btn").focus().click(function () {
+		    			$this.contentEl.remove();
 
 						$this.username = $this.contentEl.find('#username').val();
 						$this.channelname = $this.contentEl.find('#channelname').val();
