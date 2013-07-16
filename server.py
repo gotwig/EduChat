@@ -27,15 +27,12 @@ class EchoWebSocket(websocket.WebSocketHandler):
             if (len(self.channelname) < 3 or len(self.channelname) > 12 or len(self.username) == 0):
                 self.channelname = "idontevencare"             
                         
-            isinlist = True
-
-            
-            while(isinlist):
+            while(True):
                 if self.username in EchoWebSocket.users:
                     self.username += "_"
-                
+                    
                 else:
-                    isinlist = False
+                    break
 
             print('{0} joined the channel {1} at {2}'.format(self.username, self.channelname, datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")))
             
@@ -54,9 +51,13 @@ class EchoWebSocket(websocket.WebSocketHandler):
 
 
         def on_close(self):
+            EchoWebSocket.connections.conn.write_message(json.dumps(dict(event='left', user=self.username)))
+
             for conn in EchoWebSocket.connections:
                 if conn != self:
                     conn.write_message(json.dumps(dict(event='left', user=self.username)))
+
+            
             
             EchoWebSocket.connections.remove(self)
             EchoWebSocket.users.remove(self.username)

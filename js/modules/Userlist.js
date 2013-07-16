@@ -1,7 +1,5 @@
 define(function() {
 			return {
-
-				users: [],
 				socket : undefined,
 
 				start : function(options) {
@@ -36,9 +34,13 @@ define(function() {
 						var obj = JSON.parse(data);
 
 						if (obj.event=="joined"){
-							$this.users.push(obj.user);
 							$this.addUser(obj.user);
 						}
+						
+						if (obj.event=="left"){
+							$this.removeUser(obj.user);
+						}
+						
 					});
 					
 				},
