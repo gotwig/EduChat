@@ -43,14 +43,9 @@ define(['jquery'], function($) {
 		    			$this.contentEl.find(".removethestuff").addClass("hidden");
 						$this.contentEl.find("#entry").removeClass('hidden');
 
-
-						if ($this.contentEl.find('#username').length < 3 | $this.contentEl.find('#username') > 16){
-							$this.username = "John Doe";
-						}
+						$this.username = $this.contentEl.find('#username').val();
+						$this.channelname = $this.contentEl.find('#channelname').val();
 						
-						if($this.contentEl.find('#channelname').length < 4 | $this.contentEl.find('#channelname') > 12){
-							$this.channelname = "idontevencare";
-						}
 						
 						for ( var i = 0, len = $this.onLoginListeners.length; i < len; i++) {
 							$this.onLoginListeners[i]($this.username, $this.channelname);

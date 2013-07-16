@@ -57,7 +57,7 @@ define(['jquery'], function($) {
 						
 						case 'open':
 							alertName = 'alert-success';
-							systemMessage = 'You successfully joined the chat.';
+							systemMessage = 'joined the chat.';
 							break;
 						
 						case 'closed':
@@ -85,7 +85,7 @@ define(['jquery'], function($) {
 					if (!isSystemMessage){
 					
 					$(['<li class="message well">',
-	    		   		'<p class="', messageType ,' ', usercolor ,' ">',
+	    		   		'<p class="', messageType ,' usercolorn', usercolor ,' ">',
 	    		   			'<button class="close removemessage">',
 	    		   				'&times;',
 	    					'</button>',
@@ -94,6 +94,8 @@ define(['jquery'], function($) {
 	    						message,
 							'</div>',
 	    		   '</li>'].join('')).hide().appendTo(messages).fadeIn(300);
+				   $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+
 					}
 				}
 			}

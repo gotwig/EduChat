@@ -4702,31 +4702,26 @@ input[type="submit"].btn.btn-mini {
     overflow: visible !important;
   }
 }
-body {
-  background-color: #55918E;
-}
-body > .container {
+#containerEl {
+  max-width: 960px;
   margin-top: 46px;
 }
-body > .container #entry {
+#containerEl #entry {
   margin: 12px;
   margin-left: 24%;
   position: fixed;
   bottom: 2%;
 }
-body > .container #entry.active {
+#containerEl #entry.active {
   width: 76%;
   margin-left: 5%;
 }
-body > .container date {
+#containerEl date {
   color: white;
   font-size: 85%;
   left: 10%;
 }
-body > .container .systemmessage {
-  color: grey;
-}
-body > .container .message {
+#containerEl .message {
   overflow-wrap: break-word;
   margin: 2%;
   list-style: none;
@@ -4735,29 +4730,29 @@ body > .container .message {
   border: 1px transparent;
   border-radius: 12px;
 }
-body > .container .messagetext {
+#containerEl .messagetext {
   margin-left: 1%;
 }
-body > .container .removemessage {
+#containerEl .removemessage {
   height: 25px;
   position: relative;
-  right: 2%;
+  left: 99.4%;
 }
 @media only screen and (min-width: 1224px) {
-  body > .container .removemessage {
+  #containerEl .removemessage {
     visibility: hidden;
   }
 }
-body > .container .removemessage_icon {
+#containerEl .removemessage_icon {
   width: 20px;
 }
-body > .container .removemessage_icon:hover {
+#containerEl .removemessage_icon:hover {
   cursor: pointer;
 }
-body > .container .message:hover .removemessage {
+#containerEl .message:hover .removemessage {
   visibility: visible;
 }
-body > .container .username {
+#containerEl .username {
   text-align: center;
   margin-top: 0px;
   margin-bottom: 0.6%;
@@ -4766,21 +4761,21 @@ body > .container .username {
   border-radius: 12px 12px 0px 0px;
   font-weight: bold;
 }
-body > .container .usernamen1 {
+#containerEl .usercolorn1 {
   color: blue;
 }
-body > .container .usernamen2 {
+#containerEl .usercolorn2 {
   color: red;
 }
-body > .container .usernamen3 {
+#containerEl .usercolorn3 {
   color: green;
 }
-body > .container .usernamen4 {
+#containerEl .usercolorn4 {
   color: yellow;
 }
-body > .container .usernamen5 {
+#containerEl .usercolorn5 {
   color: pink;
 }
-body > .container .removethestuff.hidden {
+#containerEl .removethestuff.hidden {
   visibility: hidden;
 }
