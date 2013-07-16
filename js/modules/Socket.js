@@ -30,6 +30,7 @@ define(function() {
 					};
 
 					this.socket.onclose = function() {
+						
 						for ( var i = 0, len = $this.onCloseListeners.length; i < len; i++) {
 							$this.onCloseListeners[i](data);
 						}

@@ -44,6 +44,9 @@ class EchoWebSocket(websocket.WebSocketHandler):
             for conn in EchoWebSocket.connections:
                 if conn != self:
                     conn.write_message(json.dumps(dict(event='joined', user=self.username)))
+                if conn == self:
+                    for x in EchoWebSocket.users:
+                        conn.write_message(json.dumps(dict(event='joined', user=x)))
 
         def on_message(self, message):
             for conn in EchoWebSocket.connections:

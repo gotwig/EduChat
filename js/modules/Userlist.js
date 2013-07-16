@@ -1,9 +1,7 @@
 define(function() {
 			return {
 
-				onMessageListeners : [],
-				onOpenListeners : [],
-				onCloseListeners : [],
+				users: [],
 				socket : undefined,
 
 				start : function(options) {
@@ -11,6 +9,7 @@ define(function() {
 					
 					this.createUI();
 					this.registerCallbacks();
+					
 				},
 				
 				stop : function() {
@@ -18,16 +17,28 @@ define(function() {
 				},
 				
 				createUI: function(){
-					this.contentEl = $('<ul id="module-userlist"></ul>');
+					this.contentEl = $('<ul class="module-userlist span4"></ul>');
 					
-					this.options.containerEl.append(this.contentEl);		
+					this.options.containerEl.prepend(this.contentEl);
+					
+				},
+				
+				addUser: function(user){
+					this.options.containerEl.find(".module-userlist").append("<span>" + user + " // </span>")
+					
 				},
 
 				registerCallbacks: function() {
 					$this = this;
 					
 					this.options.socket.addListener('onmessage', function(data) {
-						console.log("someone joined the chat");
+						
+						var obj = JSON.parse(data);
+
+						if (obj.event=="joined"){
+							$this.users.push(obj.user);
+							$this.addUser(obj.user);
+						}
 					});
 					
 				},

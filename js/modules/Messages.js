@@ -1,5 +1,5 @@
 define(['jquery'], function($) {
-			var template = ['<ul class="module-messages">',
+			var template = ['<hr><ul class="module-messages span8">',
 			                '	<div id="messagesarea">',
 					           '</div>',
 					           '<input id="entry" type="text" maxlength="180" placeholder="Your new message comes here =)">',
@@ -53,17 +53,31 @@ define(['jquery'], function($) {
 										
 					this.options.socket.addListener('onmessage', function(data) {
 						var obj = JSON.parse(data);
+						switch (obj.event){
+						
+						case "message":
 						$this.appendMessage(obj.user, obj.usercolor, obj.message, false);
+						break;
+						
+						case "joined":
+							$this.appendMessage(obj.user, 0, obj.user + "    joined the chat.", true);
+						
+						case "left":
+							$this.appendMessage(obj.user, 0, obj.user + "    left the chat.", true);
+
+						}
 					});
 				
 					this.options.socket.addListener('onopen', function(data) {
+						console.log("you joined.")
 						var obj = JSON.parse(data);
-						$this.appendMessage("", "open", true);
+						$this.appendMessage("", 0, "open", true);
+						$this.contentEl.find("#entry").attr("placeholder","blub");
 					});
 					
 					this.options.socket.addListener('onclose', function(data) {
 						var obj = JSON.parse(data);
-						$this.appendMessage("", "closed", true);
+						$this.appendMessage("", 0, "closed", true);
 					});
 					
 				},
@@ -77,9 +91,14 @@ define(['jquery'], function($) {
 						
 						switch (message){
 						
+						case 'joined':
+							alertName = 'alert-sucess';
+							systemMessage = user + " joined the chat.";
+							break;
+						
 						case 'open':
 							alertName = 'alert-success';
-							systemMessage = 'joined the chat.';
+							systemMessage = 'you sucessfuly joined the chat.';
 							break;
 						
 						case 'closed':
@@ -94,9 +113,6 @@ define(['jquery'], function($) {
 						
 						$(['<li class="message">',
 		    		   		'<p class="', messageType ,'">',
-		    		   			'<button class="close removemessage">',
-		    		   				'&times;',
-		    					'</button>',
 		    		   			'<div class="messagetext">',
 		    						message,
 								'</div>',
@@ -108,9 +124,6 @@ define(['jquery'], function($) {
 					
 					$(['<li class="message well">',
 	    		   		'<p class="', messageType ,' usercolorn', usercolor ,' ">',
-	    		   			'<button class="close removemessage">',
-	    		   				'&times;',
-	    					'</button>',
 	    					user,
 	    		   			'<div class="messagetext">',
 	    						message,
