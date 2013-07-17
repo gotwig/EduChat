@@ -22,12 +22,12 @@ define(function() {
 				},
 				
 				addUser: function(user, colornumber){
-					this.options.containerEl.find(".module-userlist").append("<li class=usercolorn"+colornumber+">" + user + "  </li> // ");
+					this.options.containerEl.find(".module-userlist").append("<li><span class='usercolorn" + colornumber + "'>" + user + "</span> // </li>");
 					
 				},
 				
 				removeUser: function(user){
-					this.options.containerEl.find(".module-userlist").children().filter(":contains("+user+")").remove();
+					this.options.containerEl.find(".module-userlist").children().filter(":contains('"+user+"')").remove();
 				},
 
 				registerCallbacks: function() {

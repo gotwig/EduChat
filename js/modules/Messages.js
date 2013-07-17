@@ -106,10 +106,9 @@ define(['jquery'], function($) {
 						
 						
 						$(['<li class="message">',
-		    		   		'<p class="', messageType ,'">',
-		    		   			'<div class="messagetext"> ',
+		    		   			'<p> ',
 		    						message,
-								'</div>',
+								'</p>',
 		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
 						
 					}
@@ -127,9 +126,10 @@ define(['jquery'], function($) {
 					
 					if (!isSystemMessage && !isMeMessage){
 					
+					message = message.replace(/(http?:\/\/?\S+)/g, "<a href='$1' target='_blank'>$1</a>");
 													
 					$(['<li class="message">',
-	    		   		'<p class="', messageType ,' usercolorn', usercolor ,' ">',
+	    		   		'<p class="', messageType ,' usercolorbn', usercolor ,' ">   ',
 	    					user,
 	    		   			'<div class="messagetext">',
 	    						message,
