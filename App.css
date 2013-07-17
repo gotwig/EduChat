@@ -4709,19 +4709,6 @@ input[type="submit"].btn.btn-mini {
   max-width: 960px;
   margin-top: 46px;
 }
-#containerEl #entry {
-  margin: 12px;
-  margin-left: 24%;
-  position: fixed;
-  bottom: 2%;
-}
-#containerEl #entry.active {
-  width: 60%;
-  margin-left: 5%;
-}
-#containerEl #userlist {
-  float: right;
-}
 #containerEl date {
   color: white;
   font-size: 85%;
@@ -4730,7 +4717,16 @@ input[type="submit"].btn.btn-mini {
 #containerEl #whitespace {
   height: 64px;
 }
-#containerEl .message {
+.module-userlist {
+  padding-left: 10px;
+}
+.module-userlist ul {
+  list-style: none;
+}
+.module-userlist li {
+  display: inline;
+}
+.message {
   overflow-wrap: break-word;
   margin: 2%;
   list-style: none;
@@ -4739,29 +4735,10 @@ input[type="submit"].btn.btn-mini {
   border: 1px transparent;
   border-radius: 12px;
 }
-#containerEl .messagetext {
+.messagetext {
   margin-left: 1%;
 }
-#containerEl .removemessage {
-  height: 25px;
-  position: relative;
-  left: 99.4%;
-}
-@media only screen and (min-width: 1224px) {
-  #containerEl .removemessage {
-    visibility: hidden;
-  }
-}
-#containerEl .removemessage_icon {
-  width: 20px;
-}
-#containerEl .removemessage_icon:hover {
-  cursor: pointer;
-}
-#containerEl .message:hover .removemessage {
-  visibility: visible;
-}
-#containerEl .username {
+.username {
   text-align: center;
   margin-top: 0px;
   margin-bottom: 0.6%;
@@ -4770,27 +4747,31 @@ input[type="submit"].btn.btn-mini {
   border-radius: 12px 12px 0px 0px;
   font-weight: bold;
 }
-#containerEl .usercolorn1 {
+.usercolorn1 {
   color: blue;
 }
-#containerEl .usercolorn2 {
+.usercolorn2 {
   color: red;
 }
-#containerEl .usercolorn3 {
+.usercolorn3 {
   color: green;
 }
-#containerEl .usercolorn4 {
+.usercolorn4 {
   color: yellow;
 }
-#containerEl .usercolorn5 {
+.usercolorn5 {
   color: pink;
 }
-#containerEl .removethestuff.hidden {
-  visibility: hidden;
+#entry {
+  margin: 12px;
+  margin-left: 8%;
+  position: fixed;
+  bottom: 2%;
+  width: 28%;
 }
-.module-userlist ul {
-  list-style: none;
-}
-.module-userlist li {
-  display: inline;
+#entrybutton {
+  margin: 12px;
+  margin-left: 38%;
+  position: fixed;
+  bottom: 2.2%;
 }

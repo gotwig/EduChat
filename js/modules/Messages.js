@@ -1,8 +1,9 @@
 define(['jquery'], function($) {
-			var template = ['<hr><ul class="module-messages span8">',
+			var template = ['<ul class="module-messages span6">',
 			                '	<div id="messagesarea">',
 					           '</div>',
 					           '<input id="entry" type="text" maxlength="180" placeholder="Your new message comes here =)">',
+					           '<button id="entrybutton" class="btn">Send</button>',
 					           '<div id="whitespace">',
 				    		   '</div>',
 					        '</ul>'].join('');
@@ -46,6 +47,15 @@ define(['jquery'], function($) {
 	        				$('#entry').val("");
 	        			}
 	        		});
+	        			        		
+	        		$('#entrybutton').click(function () {
+	        			if($('#entry').val().length > 0){
+	    			
+	        				$this.options.socket.send($('#entry').val());
+	        				$('#entry').val("");
+	        			}
+	        		});
+	        		
 				},
 				
 				registerCallbacks: function() {
@@ -97,9 +107,7 @@ define(['jquery'], function($) {
 						
 						$(['<li class="message">',
 		    		   		'<p class="', messageType ,'">',
-		    		   			'<div class="messagetext usercolorn',
-		    		   			usercolor,
-		    		   			'">',
+		    		   			'<div class="messagetext"> ',
 		    						message,
 								'</div>',
 		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
@@ -119,7 +127,8 @@ define(['jquery'], function($) {
 					
 					if (!isSystemMessage && !isMeMessage){
 					
-					$(['<li class="message well">',
+													
+					$(['<li class="message">',
 	    		   		'<p class="', messageType ,' usercolorn', usercolor ,' ">',
 	    					user,
 	    		   			'<div class="messagetext">',

@@ -15,7 +15,7 @@ define(function() {
 				},
 				
 				createUI: function(){
-					this.contentEl = $('<ul class="module-userlist span4"></ul>');
+					this.contentEl = $('<ul class="module-userlist well span2"></ul>');
 					
 					this.options.containerEl.prepend(this.contentEl);
 					
@@ -27,7 +27,6 @@ define(function() {
 				},
 				
 				removeUser: function(user){
-					console.log(user);
 					this.options.containerEl.find(".module-userlist").children().filter(":contains("+user+")").remove();
 				},
 
