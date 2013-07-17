@@ -4788,3 +4788,9 @@ input[type="submit"].btn.btn-mini {
 #containerEl .removethestuff.hidden {
   visibility: hidden;
 }
+.module-userlist ul {
+  list-style: none;
+}
+.module-userlist li {
+  display: inline;
+}

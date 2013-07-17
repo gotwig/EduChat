@@ -21,8 +21,8 @@ define(function() {
 					
 				},
 				
-				addUser: function(user){
-					this.options.containerEl.find(".module-userlist").append("<li>" + user + " // </li>");
+				addUser: function(user, colornumber){
+					this.options.containerEl.find(".module-userlist").append("<li class=usercolorn"+colornumber+">" + user + "  </li> // ");
 					
 				},
 				
@@ -39,7 +39,8 @@ define(function() {
 						var obj = JSON.parse(data);
 
 						if (obj.event=="joined"){
-							$this.addUser(obj.user);
+							console.log(obj.usercolor);
+							$this.addUser(obj.user, obj.usercolor);
 						}
 						
 						if (obj.event=="left"){

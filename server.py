@@ -43,10 +43,10 @@ class EchoWebSocket(websocket.WebSocketHandler):
             EchoWebSocket.users.append(self.username)
             for conn in EchoWebSocket.connections:
                 if conn != self:
-                    conn.write_message(json.dumps(dict(event='joined', user=self.username)))
+                    conn.write_message(json.dumps(dict(event='joined', user=self.username, usercolor=self.usercolor)))
                 if conn == self:
                     for x in EchoWebSocket.users:
-                        conn.write_message(json.dumps(dict(event='joined', user=x)))
+                        conn.write_message(json.dumps(dict(event='joined', user=x, usercolor=EchoWebSocket.usercolor)))
 
         def on_message(self, message):
             for conn in EchoWebSocket.connections:
