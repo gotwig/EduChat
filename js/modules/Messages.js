@@ -61,15 +61,16 @@ define(['jquery'], function($) {
 						
 						case "joined":
 							$this.appendMessage(obj.user, 0, obj.user + "    joined the chat.", true);
+							break;
 						
 						case "left":
 							$this.appendMessage(obj.user, 0, obj.user + "    left the chat.", true);
+							break;
 
 						}
 					});
 				
 					this.options.socket.addListener('onopen', function(data) {
-						console.log("you joined.")
 						var obj = JSON.parse(data);
 						$this.appendMessage("", 0, "open", true);
 						$this.contentEl.find("#entry").attr("placeholder","blub");

@@ -22,8 +22,13 @@ define(function() {
 				},
 				
 				addUser: function(user){
-					this.options.containerEl.find(".module-userlist").append("<span>" + user + " // </span>")
+					this.options.containerEl.find(".module-userlist").append("<li>" + user + " // </li>");
 					
+				},
+				
+				removeUser: function(user){
+					console.log(user);
+					this.options.containerEl.find(".module-userlist").children().filter(":contains("+user+")").remove();
 				},
 
 				registerCallbacks: function() {

@@ -15,6 +15,9 @@ class EchoWebSocket(websocket.WebSocketHandler):
     
         def open(self):
             
+            if not EchoWebSocket.connections:
+                EchoWebSocket.usercolor = 0;
+            
             self.username = self.get_argument("username", "generic")
             self.channelname = self.get_argument("chatroomname", "generic")        
             
@@ -51,7 +54,8 @@ class EchoWebSocket(websocket.WebSocketHandler):
 
 
         def on_close(self):
-            EchoWebSocket.connections.conn.write_message(json.dumps(dict(event='left', user=self.username)))
+
+            print('{0} left the channel {1} at {2}'.format(self.username, self.channelname, datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")))
 
             for conn in EchoWebSocket.connections:
                 if conn != self:
