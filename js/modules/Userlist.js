@@ -38,7 +38,6 @@ define(function() {
 						var obj = JSON.parse(data);
 
 						if (obj.event=="joined"){
-							console.log(obj.usercolor);
 							$this.addUser(obj.user, obj.usercolor);
 						}
 						
