@@ -56,15 +56,18 @@ define(['jquery'], function($) {
 						switch (obj.event){
 						
 						case "message":
-						$this.appendMessage(obj.user, obj.usercolor, obj.message, false);
-						break;
+							$this.appendMessage(obj.user, obj.usercolor, obj.message, false, false);
+							break;
+						
+						case "memessage":
+							$this.appendMessage(obj.user, obj.usercolor, obj.message, false, true);
 						
 						case "joined":
-							$this.appendMessage(obj.user, 0, obj.user + "    joined the chat.", true);
+							$this.appendMessage(obj.user, obj.usercolor, obj.user + "    joined the chat.", true, false);
 							break;
 						
 						case "left":
-							$this.appendMessage(obj.user, 0, obj.user + "    left the chat.", true);
+							$this.appendMessage(obj.user, obj.usercolor, obj.user + "    left the chat.", true, false);
 							break;
 
 						}
@@ -83,45 +86,37 @@ define(['jquery'], function($) {
 					
 				},
 				
-				appendMessage: function(user, usercolor, message, isSystemMessage) {
+				appendMessage: function(user, usercolor, message, isSystemMessage, isMeMessage) {
 					var alertName, systemMessage;
 					
 					var messageType = isSystemMessage ? 'systemmessage' : 'usermessage';
 					
 					if (isSystemMessage){
 						
-						switch (message){
-						
-						case 'joined':
-							alertName = 'alert-sucess';
-							systemMessage = user + " joined the chat.";
-							break;
-						
-						case 'open':
-							alertName = 'alert-success';
-							systemMessage = 'you sucessfuly joined the chat.';
-							break;
-						
-						case 'closed':
-							alertName = 'alert-error';
-							systemMessage = 'The server is not reachable. Try to rejoin later.'
-							break;
-						
-						default:
-							alertName = 'alert-info'
-							systemMessage = 'Something unexpected happened. Try to rejoin.'
-						}
 						
 						$(['<li class="message">',
 		    		   		'<p class="', messageType ,'">',
-		    		   			'<div class="messagetext">',
+		    		   			'<div class="messagetext usercolorn',
+		    		   			usercolor,
+		    		   			'">',
 		    						message,
 								'</div>',
 		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
 						
 					}
 					
-					if (!isSystemMessage){
+					if (isMeMessage){
+						$(['<li class="message">',
+		    		   		'<p class="', messageType ,'">',
+		    		   			'<div class="messagetext usercolorn',
+		    		   			usercolor,
+		    		   			'">',
+		    						message,
+								'</div>',
+		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
+					}
+					
+					if (!isSystemMessage && !isMeMessage){
 					
 					$(['<li class="message well">',
 	    		   		'<p class="', messageType ,' usercolorn', usercolor ,' ">',
