@@ -12,8 +12,11 @@ class EchoWebSocket(websocket.WebSocketHandler):
         username = None
         usercolor = 0
         users = []
+        
     
         def open(self):
+            
+            
             
             if not EchoWebSocket.connections:
                 EchoWebSocket.usercolor = 0;
@@ -45,17 +48,18 @@ class EchoWebSocket(websocket.WebSocketHandler):
                 if conn != self:
                     conn.write_message(json.dumps(dict(event='joined', user=self.username, usercolor=self.usercolor)))
                     
+                    
                 if conn == self:
                     for x in EchoWebSocket.users:
                         conn.write_message(json.dumps(dict(event='joined', user=x, usercolor=EchoWebSocket.usercolor)))
-                        print(conn)
+                    
 
         def on_message(self, message):
             
             if (message.strip().startswith('/me')):
                 for conn in EchoWebSocket.connections:
                     conn.write_message(json.dumps(dict(event='memessage', usercolor=self.usercolor, message=self.username + " " + message[4:], time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
-                    break
+                    
                 
             else:
                 for conn in EchoWebSocket.connections:

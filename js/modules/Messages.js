@@ -61,7 +61,8 @@ define(['jquery'], function($) {
 						
 						case "memessage":
 							$this.appendMessage(obj.user, obj.usercolor, obj.message, false, true);
-						
+							break;
+							
 						case "joined":
 							$this.appendMessage(obj.user, obj.usercolor, obj.user + "    joined the chat.", true, false);
 							break;
