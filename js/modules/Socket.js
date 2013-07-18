@@ -21,7 +21,7 @@ define(function() {
 						for ( var i = 0, len = $this.onMessageListeners.length; i < len; i++) {
 							$this.onMessageListeners[i](dataevent.data);
 						}
-
+						
 					};
 					this.socket.onopen = function(data) {
 						for ( var i = 0, len = $this.onOpenListeners.length; i < len; i++) {

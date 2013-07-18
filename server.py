@@ -14,10 +14,7 @@ class EchoWebSocket(websocket.WebSocketHandler):
         users = []
         
     
-        def open(self):
-            
-            
-            
+        def open(self):      
             if not EchoWebSocket.connections:
                 EchoWebSocket.usercolor = 0;
             
@@ -48,26 +45,24 @@ class EchoWebSocket(websocket.WebSocketHandler):
                 if conn != self:
                     conn.write_message(json.dumps(dict(event='joined', user=self.username, usercolor=self.usercolor)))
                     
-                    
                 if conn == self:
                     for x in EchoWebSocket.users:
                         conn.write_message(json.dumps(dict(event='joined', user=x, usercolor=EchoWebSocket.usercolor)))
                     
 
+
         def on_message(self, message):
-            
             if (message.strip().startswith('/me')):
                 for conn in EchoWebSocket.connections:
-                    conn.write_message(json.dumps(dict(event='memessage', usercolor=self.usercolor, message=self.username + " " + message[4:], time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
-                    
+                    conn.write_message(json.dumps(dict(event='memessage', usercolor=self.usercolor, message=self.username + " " + message[4:], time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))        
                 
             else:
                 for conn in EchoWebSocket.connections:
                     conn.write_message(json.dumps(dict(event='message', user=self.username, usercolor=self.usercolor, message=message, time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
 
 
-        def on_close(self):
 
+        def on_close(self):
             print('{0} left the channel {1} at {2}'.format(self.username, self.channelname, datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")))
 
             for conn in EchoWebSocket.connections:
