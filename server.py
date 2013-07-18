@@ -47,7 +47,7 @@ class EchoWebSocket(websocket.WebSocketHandler):
                     
                 if conn == self:
                     for x in EchoWebSocket.users:
-                        conn.write_message(json.dumps(dict(event='joined', user=x, usercolor=EchoWebSocket.usercolor)))
+                        conn.write_message(json.dumps(dict(event='joined', user=x, usercolor=0)))
                     
 
 
