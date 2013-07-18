@@ -27,7 +27,9 @@ define(function() {
 				},
 				
 				removeUser: function(user){
-					this.options.containerEl.find(".module-userlist").children().filter(":contains('"+user+"')").remove();
+					this.options.containerEl.find(".module-userlist").children().filter(function() {
+					    return $.trim($(this).find('span').text()) === user;
+					}).remove();
 				},
 
 				registerCallbacks: function() {
