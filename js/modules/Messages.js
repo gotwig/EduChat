@@ -98,8 +98,6 @@ define(['jquery'], function($) {
 				},
 				
 				appendMessage: function(user, usercolor, message, isSystemMessage, isMeMessage) {
-					var alertName, systemMessage;
-					
 					var messageType = isSystemMessage ? 'systemmessage' : 'usermessage';
 					
 					if (isSystemMessage){
