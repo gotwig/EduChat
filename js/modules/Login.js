@@ -7,8 +7,6 @@ define(['jquery'], function($) {
 		    					'<legend>ENTER NOW</legend>',
 		    					'<label>Your awesome Nickname</label>',
 		    					'<input maxlength="16" id="username" type="text" placeholder="John Doe">',
-		    					'<label>Choose a legendary channelname</label>',
-		    					'<input maxlength="10" id="channelname" type="text" placeholder="idontevencare">', 
 		    					'<br />',
 		    					'<button type="submit" class="btn">Enter a world of joy</button>',
 		    				'</fieldset>',
@@ -37,7 +35,7 @@ define(['jquery'], function($) {
 		    			$this.contentEl.remove();
 
 						$this.username = $this.contentEl.find('#username').val();
-						$this.channelname = $this.contentEl.find('#channelname').val();
+						$this.channelname = 'idontevencare'
 						
 						
 						for ( var i = 0, len = $this.onLoginListeners.length; i < len; i++) {
