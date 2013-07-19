@@ -66,19 +66,19 @@ define(['jquery'], function($) {
 						switch (obj.event){
 						
 						case "message":
-							$this.appendMessage(obj.user, obj.usercolor, obj.message, false, false);
+							$this.appendMessage(obj.user, obj.message, false, false);
 							break;
 						
 						case "memessage":
-							$this.appendMessage(obj.user, obj.usercolor, obj.message, false, true);
+							$this.appendMessage(obj.user, obj.message, false, true);
 							break;
 							
 						case "joined":
-							$this.appendMessage(obj.user, obj.usercolor, obj.user + "    joined the chat.", true, false);
+							$this.appendMessage(obj.user, obj.user + "    joined the chat.", true, false);
 							break;
 						
 						case "left":
-							$this.appendMessage(obj.user, obj.usercolor, obj.user + "    left the chat.", true, false);
+							$this.appendMessage(obj.user, obj.user + "    left the chat.", true, false);
 							break;
 
 						}
@@ -97,16 +97,16 @@ define(['jquery'], function($) {
 					
 				},
 				
-				appendMessage: function(user, usercolor, message, isSystemMessage, isMeMessage) {
+				appendMessage: function(user, message, isSystemMessage, isMeMessage) {
 					var messageType = isSystemMessage ? 'systemmessage' : 'usermessage';
 					
 					if (isSystemMessage){
 						
 						
 						$(['<li class="message">',
-		    		   			'<p> ',
-		    						message,
-								'</p>',
+		    		   		'<p> ',
+		    					message,
+							'</p>',
 		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
 						
 					}
@@ -114,9 +114,7 @@ define(['jquery'], function($) {
 					if (isMeMessage){
 						$(['<li class="message">',
 		    		   		'<p class="', messageType ,'">',
-		    		   			'<div class="messagetext usercolorn',
-		    		   			usercolor,
-		    		   			'">',
+		    		   			'<div class="messagetext">',
 		    						message,
 								'</div>',
 		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
@@ -126,12 +124,13 @@ define(['jquery'], function($) {
 					
 					message = message.replace(/(http?:\/\/?\S+)/g, "<a href='$1' target='_blank'>$1</a>");
 													
-					$(['<li class="message">',
-	    		   		'<p class="', messageType ,' usercolorbn', usercolor ,' ">   ',
+					$(['<li>',
+	    		   		'<h3>',
 	    					user,
-	    		   			'<div class="messagetext">',
-	    						message,
-							'</div>',
+	    				'</h3>',	
+	    		   		'<p>',
+	    					message,
+						'</p>',
 	    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
 				   $("html, body").animate({ scrollTop: $(document).height() }, 1000);
 

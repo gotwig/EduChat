@@ -10,20 +10,13 @@ class IndexHandler(tornado.web.RequestHandler):
  
 class EchoWebSocket(websocket.WebSocketHandler):
         username = None
-        usercolor = 0
         users = []
         
     
         def open(self):      
-            if not EchoWebSocket.connections:
-                EchoWebSocket.usercolor = 0;
-            
             self.username = self.get_argument("username", "generic")
             self.channelname = self.get_argument("chatroomname", "generic")        
-            
-            self.usercolor = EchoWebSocket.usercolor + 1
-            EchoWebSocket.usercolor += 1
-                        
+                                    
             if (len(self.username) < 3 or len(self.username) > 16 or len(self.username) == 0):
                 self.username = "John Doe"          
                                
@@ -43,22 +36,22 @@ class EchoWebSocket(websocket.WebSocketHandler):
             EchoWebSocket.users.append(self.username)
             for conn in EchoWebSocket.connections:
                 if conn != self:
-                    conn.write_message(json.dumps(dict(event='joined', user=self.username, usercolor=self.usercolor)))
+                    conn.write_message(json.dumps(dict(event='joined', user=self.username)))
                     
                 if conn == self:
                     for x in EchoWebSocket.users:
-                        conn.write_message(json.dumps(dict(event='joined', user=x, usercolor=0)))
+                        conn.write_message(json.dumps(dict(event='joined', user=x)))
                     
 
 
         def on_message(self, message):
             if (message.strip().startswith('/me')):
                 for conn in EchoWebSocket.connections:
-                    conn.write_message(json.dumps(dict(event='memessage', usercolor=self.usercolor, message=self.username + " " + message[4:], time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))        
+                    conn.write_message(json.dumps(dict(event='memessage', message=self.username + " " + message[4:], time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))        
                 
             else:
                 for conn in EchoWebSocket.connections:
-                    conn.write_message(json.dumps(dict(event='message', user=self.username, usercolor=self.usercolor, message=message, time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
+                    conn.write_message(json.dumps(dict(event='message', user=self.username, message=message, time=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"))))
 
 
 
@@ -67,15 +60,14 @@ class EchoWebSocket(websocket.WebSocketHandler):
 
             for conn in EchoWebSocket.connections:
                 if conn != self:
-                    conn.write_message(json.dumps(dict(event='left', user=self.username, usercolor=self.usercolor)))
+                    conn.write_message(json.dumps(dict(event='left', user=self.username)))
 
             
             
             EchoWebSocket.connections.remove(self)
             EchoWebSocket.users.remove(self.username)
-            EchoWebSocket.usercolor = self.usercolor-1
 
-EchoWebSocket.usercolor = 0
+
 EchoWebSocket.connections = []
 
 app = tornado.web.Application([

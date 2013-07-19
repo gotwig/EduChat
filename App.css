@@ -5581,6 +5581,9 @@ input[type="submit"].btn.btn-mini {
 .module-userlist li {
   display: inline;
 }
+.module-userlist span {
+  display: inline;
+}
 @media only screen and (min-width: 668px) {
   .module-userlist {
     position: fixed;
@@ -5588,7 +5591,7 @@ input[type="submit"].btn.btn-mini {
 }
 @media only screen and (min-width: 668px) {
   .module-messages {
-    padding-left: 20%;
+    padding-left: 24%;
   }
 }
 .message {
@@ -5602,6 +5605,9 @@ input[type="submit"].btn.btn-mini {
 }
 .messagetext {
   margin-left: 1%;
+}
+ul {
+  list-style: none;
 }
 .username {
   text-align: center;
@@ -5629,7 +5635,7 @@ input[type="submit"].btn.btn-mini {
   color: green;
 }
 .usercolorn4 {
-  color: yellow;
+  color: #ffad00;
 }
 .usercolorn5 {
   color: pink;
