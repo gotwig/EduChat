@@ -5594,18 +5594,6 @@ input[type="submit"].btn.btn-mini {
     padding-left: 24%;
   }
 }
-.message {
-  overflow-wrap: break-word;
-  margin: 2%;
-  list-style: none;
-  margin-left: 5%;
-  background-color: gainsboro;
-  border: 1px transparent;
-  border-radius: 12px 12px 0px 0px;
-}
-.messagetext {
-  margin-left: 1%;
-}
 ul {
   list-style: none;
 }
@@ -5618,53 +5606,15 @@ ul {
   border-radius: 12px 12px 0px 0px;
   font-weight: bold;
 }
-.usermessage {
-  color: white;
-  margin: 1px;
-  border-radius: 12px 12px 0px 0px !important;
-  padding: 2px;
-  padding-left: 15px;
-}
-.usercolorn1 {
-  color: blue;
-}
-.usercolorn2 {
-  color: red;
-}
-.usercolorn3 {
-  color: green;
-}
-.usercolorn4 {
-  color: #ffad00;
-}
-.usercolorn5 {
-  color: pink;
-}
-.usercolorbn1 {
-  background-color: blue;
-}
-.usercolorbn2 {
-  background-color: red;
-}
-.usercolorbn3 {
-  background-color: green;
-}
-.usercolorbn4 {
-  background-color: yellow;
-}
-.usercolorbn5 {
-  background-color: pink;
-}
 #entry {
   margin: 12px;
-  margin-left: 8%;
   position: fixed;
   bottom: 3%;
   width: 28%;
 }
 #entrybutton {
   margin: 12px;
-  margin-left: 38%;
+  margin-left: 30%;
   position: fixed;
   bottom: 3.2%;
 }

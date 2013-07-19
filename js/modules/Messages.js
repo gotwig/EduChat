@@ -103,20 +103,18 @@ define(['jquery'], function($) {
 					if (isSystemMessage){
 						
 						
-						$(['<li class="message">',
-		    		   		'<p> ',
-		    					message,
-							'</p>',
-		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
-						
+						$(['<li>',
+	    		   			'<h6>',
+	    		   				message,
+	    		   			'</h6>',	
+		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(500);
 					}
-					
+						
 					if (isMeMessage){
-						$(['<li class="message">',
-		    		   		'<p class="', messageType ,'">',
-		    		   			'<div class="messagetext">',
-		    						message,
-								'</div>',
+						$(['<li>',
+	    		   			'<h5>',
+	    		   				message,
+	    		   			'</h5>',	
 		    		   '</li>'].join('')).hide().appendTo(messagesarea).fadeIn(300);
 					}
 					
@@ -125,9 +123,9 @@ define(['jquery'], function($) {
 					message = message.replace(/(http?:\/\/?\S+)/g, "<a href='$1' target='_blank'>$1</a>");
 													
 					$(['<li>',
-	    		   		'<h3>',
+	    		   		'<h4>',
 	    					user,
-	    				'</h3>',	
+	    				'</h4>',	
 	    		   		'<p>',
 	    					message,
 						'</p>',
